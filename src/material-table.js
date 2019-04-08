@@ -436,7 +436,12 @@ class MaterialTable extends React.Component {
                           this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
                         }}
                         onToggleDetailPanel={(path, render) => {
-                          this.dataManager.changeDetailPanelVisibility(path, render);
+                          const visible = this.dataManager.changeDetailPanelVisibility(
+                            path,
+                            render
+                          );
+                          this.props.detailPanelVisibility &&
+                            this.props.detailPanelVisibility(visible);
                           this.setState(this.dataManager.getRenderState());
                         }}
                         onGroupExpandChanged={(path) => {
@@ -733,6 +738,7 @@ MaterialTable.propTypes = {
       })
     ]))
   ]),
+  detailPanelVisibility: PropTypes.func,
   icons: PropTypes.shape({
     Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

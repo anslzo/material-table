@@ -126,19 +126,25 @@ export default class DataManager {
 
   changeDetailPanelVisibility(path, render) {
     const rowData = this.findDataByPath(this.sortedData, path);
-
+    let visible = false;
     if (rowData.tableData.showDetailPanel === render) {
       rowData.tableData.showDetailPanel = undefined;
-    }
-    else {
+      visible = false;
+    } else {
       rowData.tableData.showDetailPanel = render;
+      visible = true;
     }
 
-    if (this.detailPanelType === 'single' && this.lastDetailPanelRow && this.lastDetailPanelRow != rowData) {
+    if (
+      this.detailPanelType === "single" &&
+      this.lastDetailPanelRow &&
+      this.lastDetailPanelRow != rowData
+    ) {
       this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
     }
 
     this.lastDetailPanelRow = rowData;
+    return visible;
   }
 
   changeGroupExpand(path) {
